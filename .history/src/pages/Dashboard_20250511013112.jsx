@@ -21,19 +21,8 @@ const farms = [
   },
 ];
 
-// Hàm lấy dữ liệu farm: ưu tiên đọc từ localStorage (demo), nếu không có thì dùng mock data mặc định
-// Sau này, thay hàm này bằng gọi API lấy dữ liệu từ server
-const getFarmData = (label) => {
-  const local = localStorage.getItem(`farmStatus_${label}`);
-  if (local) {
-    const { temperature, humidity, sunlight } = JSON.parse(local);
-    return {
-      temperature: `${temperature}°C`,
-      humidity: `${humidity}%`,
-      sunlight: sunlight // sunlight giờ là string trạng thái
-    };
-  }
-  // mock data mặc định
+const FarmCard = ({ label, image }) => {
+  // Sample mock data
   const mockData = {
     FARM1: {
       temperature: "27°C",
@@ -48,14 +37,11 @@ const getFarmData = (label) => {
     FARM3: {
       temperature: "29°C",
       humidity: "58%",
-      sunlight: "Very High"
+      sunlight: "High"
     }
   };
-  return mockData[label] || { temperature: "N/A", humidity: "N/A", sunlight: "N/A" };
-};
 
-const FarmCard = ({ label, image }) => {
-  const farmData = getFarmData(label);
+  const farmData = mockData[label] || { temperature: "N/A", humidity: "N/A", sunlight: "N/A" };
   const navigate = useNavigate();
   
   return (
